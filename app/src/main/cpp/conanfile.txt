@@ -1,0 +1,9 @@
+[requires]
+opengl/system
+
+[generators]
+CMakeToolchain
+CMakeDeps
+
+[layout]
+cmake_layout
