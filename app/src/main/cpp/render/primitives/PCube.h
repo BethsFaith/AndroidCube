@@ -2,20 +2,20 @@
 // Created by VeraTag on 03.08.2024.
 //
 
-#ifndef CUBE_CUBE_H
-#define CUBE_CUBE_H
+#ifndef CUBE_PCUBE_H
+#define CUBE_PCUBE_H
 
 #include "Primitive.h"
 #include "buffers/Vbo.h"
 #include "buffers/Ebo.h"
 #include "buffers/Vertex.h"
 
-namespace Render {
-    class Cube : public Primitive {
+namespace Render::Primitives {
+    class PCube : public Primitive {
     public:
-        explicit Cube(const Settings &settings);
+        explicit PCube(const Settings &settings);
 
-        ~Cube() override = default;
+        ~PCube() override = default;
 
         void draw() override;
 
@@ -27,4 +27,4 @@ namespace Render {
     };
 } // Render
 
-#endif //CUBE_CUBE_H
+#endif //CUBE_PCUBE_H

@@ -13,10 +13,15 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         render/buffers/Vbo.cpp
         render/buffers/Ebo.cpp
         render/buffers/Vertex.cpp
-        render/Primitive.cpp
-        render/Cube.cpp
+        render/primitives/Primitive.cpp
+        render/primitives/PCube.cpp
+        render/techniques/ATechnique.cpp
+        render/techniques/TransformTechnique.cpp
+        render/Object.cpp
+        render/Shader.cpp
 )
 
+include_directories(render)
 add_subdirectory(glm)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}

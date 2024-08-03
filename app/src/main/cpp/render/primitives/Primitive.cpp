@@ -4,7 +4,7 @@
 
 #include "Primitive.h"
 
-namespace Render {
+namespace Render::Primitives {
     Primitive::Primitive(const int &vertexNumber) : Primitive(vertexNumber, {}) {}
 
     Primitive::Primitive(const int &vertexNumber, const Settings &settings_) : vertexNumber(vertexNumber), settings(settings_) {

@@ -7,16 +7,18 @@
 
 #include "buffers/Vao.h"
 
-namespace Render {
+namespace Render::Primitives {
     struct Settings {
-        bool with_normals = true;
-        bool with_texture_coords = true;
-        bool with_tangent = true;
-        bool with_bitangent = true;
+        bool withNormals = true;
+        bool withTextureCoords = true;
+        bool withTangent = true;
+        bool withBitangent = true;
     };
 
     class Primitive {
     public:
+        using Ptr = std::shared_ptr<Primitive>;
+
         explicit Primitive(const int& vertexNumber);
         explicit Primitive(const int& vertexNumber, const Settings &settings_);
 
