@@ -8,6 +8,13 @@ project("Cube")
 # used in the AndroidManifest.xml file.
 add_library(${CMAKE_PROJECT_NAME} SHARED
         main.cpp
+        render/buffers/ARaiiBuffer.cpp
+        render/buffers/Vao.cpp
+        render/buffers/Vbo.cpp
+        render/buffers/Ebo.cpp
+        render/buffers/Vertex.cpp
+        render/Primitive.cpp
+        render/Cube.cpp
 )
 
 add_subdirectory(glm)
