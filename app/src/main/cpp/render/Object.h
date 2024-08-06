@@ -19,7 +19,7 @@ namespace Render {
         Object() = default;
         virtual ~Object() = default;
 
-        virtual void render(Shader::Ptr& shader);
+        virtual void render(Shaders::ShaderProgram::Ptr& shaderProgram);
 
         void addTechnique(Techniques::TechniqueType type, Techniques::ATechnique::Ptr technique);
         void removeTechnique(Techniques::TechniqueType type);

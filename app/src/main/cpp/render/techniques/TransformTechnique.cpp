@@ -5,7 +5,7 @@
 #include "TransformTechnique.h"
 
 namespace Render::Techniques {
-    void TransformTechnique::execute(Shader::Ptr shader) {
+    void TransformTechnique::execute(Shaders::ShaderProgram::Ptr shader) {
         glm::mat4 trans = glm::mat4(1.0f);
         if (_needTransform) {
             trans = glm::translate(trans, _transformValue);

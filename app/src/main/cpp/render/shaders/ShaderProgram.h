@@ -2,8 +2,8 @@
 // Created by VeraTag on 03.08.2024.
 //
 
-#ifndef CUBE_SHADER_H
-#define CUBE_SHADER_H
+#ifndef CUBE_SHADERPROGRAM_H
+#define CUBE_SHADERPROGRAM_H
 
 #include <iostream>
 #include <fstream>
@@ -12,16 +12,20 @@
 #include <functional>
 #include <exception>
 
-#include <glm/glm.hpp>
+#include "glm/glm.hpp"
 #include <GLES3/gl3.h>
 
-namespace Render {
-    class Shader {
+#include "Shader.h"
+
+namespace Render::Shaders {
+    class ShaderProgram {
     public:
-        using Ptr = std::shared_ptr<Shader>;
+        using Ptr = std::shared_ptr<ShaderProgram>;
 
         // Конструктор считывает данные и выполняет построение шейдера
-        Shader(const std::string& vertexPath, const std::string& fragmentPath);
+        //ShaderProgram(const std::string& vertexPath, const std::string& fragmentPath);
+        ShaderProgram(const char* vertexSource, const char* fragmentSource);
+        ~ShaderProgram();
 
         // Использование/активация шейдера
         void use();
@@ -40,9 +44,9 @@ namespace Render {
         [[nodiscard]] unsigned int getId() const;
 
     private:
-        unsigned int ID; // IdCounter - идентификатор программы
+        unsigned int _id; // IdCounter - идентификатор программы
     };
 
 } // Render
 
-#endif //CUBE_SHADER_H
+#endif //CUBE_SHADERPROGRAM_H

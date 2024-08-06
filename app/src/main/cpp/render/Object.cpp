@@ -5,13 +5,13 @@
 #include "Object.h"
 
 namespace Render {
-    void Object::render(Shader::Ptr& shader) {
-        shader->use();
+    void Object::render(Shaders::ShaderProgram::Ptr& shaderProgram) {
+        shaderProgram->use();
 
         for (const auto& pair : _techniques) {
             auto technique = pair.second;
             if (technique->isEnabled()) {
-                technique->execute(shader);
+                technique->execute(shaderProgram);
             }
         }
 

@@ -24,7 +24,7 @@ namespace Render::Techniques {
         TransformTechnique() = default;
         ~TransformTechnique() override = default;
 
-        void execute(Shader::Ptr shader) override;
+        void execute(Shaders::ShaderProgram::Ptr shader) override;
 
         void enableTransform(const glm::vec3 &transformValue);
         void enableTransform();

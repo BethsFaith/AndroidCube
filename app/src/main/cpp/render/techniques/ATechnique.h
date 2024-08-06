@@ -5,7 +5,7 @@
 #ifndef CUBE_ATECHNIQUE_H
 #define CUBE_ATECHNIQUE_H
 
-#include "Shader.h"
+#include "shaders/ShaderProgram.h"
 
 namespace Render::Techniques {
     class ATechnique {
@@ -15,7 +15,7 @@ namespace Render::Techniques {
         ATechnique() = default;
         virtual ~ATechnique() = default;
 
-        virtual void execute(Shader::Ptr shader) = 0;
+        virtual void execute(Shaders::ShaderProgram::Ptr shader) = 0;
 
         void enable();
         void disable();
