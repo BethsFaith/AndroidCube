@@ -15,12 +15,11 @@ add_library(${CMAKE_PROJECT_NAME} SHARED
         render/buffers/Vertex.cpp
         render/primitives/Primitive.cpp
         render/primitives/PCube.cpp
-        render/techniques/ATechnique.cpp
-        render/techniques/TransformTechnique.cpp
-        render/techniques/Transform3dTechnique.cpp
-        render/Object.cpp
         render/shaders/ShaderProgram.cpp
         render/shaders/Shader.cpp
+        render/techniques/ATechnique.cpp
+        render/techniques/Transform3dTechnique.cpp
+        render/Object.cpp
         RenderProgram.cpp
 )
 

@@ -8,8 +8,7 @@
 namespace Render::Techniques {
     enum TechniqueType {
         TRANSFORM,
-        COLOR,
-        TEXTURE
+        COLOR
     };
 }
 
