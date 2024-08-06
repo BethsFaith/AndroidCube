@@ -25,18 +25,22 @@ public:
 
     void renderFrame();
 
+    void rotateCube(glm::vec3 axis);
+    void orbitCube(bool forward);
+
     std::string getLastError();
 
 protected:
     void clearColor() const;
 
 private:
-    RenderProgram() = default;
+    RenderProgram();
 
     glm::vec4 _clearColor{1.0,1.0,1.0,1.0};
 
     Render::Object::Ptr _object;
     Render::Shaders::ShaderProgram::Ptr _shaderProgram;
+    Render::Techniques::Transform3dTechnique::Ptr transformTechnique;
 
     std::string _lastError;
 };

@@ -8,6 +8,8 @@ import android.content.res.Resources;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -15,7 +17,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements View.OnTouchListener {
     private GLSurfaceView glSurfaceView;
     private boolean rendererSet;
 
@@ -71,6 +73,7 @@ public class MainActivity extends Activity {
 
             glSurfaceView.setEGLContextClientVersion(2);
             glSurfaceView.setRenderer(rendererWrapper);
+            glSurfaceView.setOnTouchListener(this);
             rendererSet = true;
             setContentView(glSurfaceView);
         } else {
@@ -104,4 +107,67 @@ public class MainActivity extends Activity {
             glSurfaceView.onResume();
         }
     }
+
+    @Override
+    protected void onStop() {
+        super.onPause();
+
+        if (rendererSet) {
+//            glSurfaceView.onPause();
+        }
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onResume();
+
+        if (rendererSet) {
+//            glSurfaceView.onResume();
+        }
+    }
+
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        switch (motionEvent.getAction()) {
+            case MotionEvent.ACTION_DOWN: // нажатие
+                break;
+            case MotionEvent.ACTION_MOVE: // движение
+                if (lastX < motionEvent.getX()) {
+                    JNIWrapper.round(0, 1, 0);
+                } else if (lastX > motionEvent.getX()) {
+                    JNIWrapper.round(0, -1, 0);
+                }
+//                if (Math.abs(x - motionEvent.getX()) > Math.abs(y - motionEvent.getY())) {
+//                    if (x < motionEvent.getX()) {
+//                        JNIWrapper.round(0, 1, 0);
+//                    } else if (x > motionEvent.getX()) {
+//                        JNIWrapper.round(0, -1, 0);
+//                    }
+//                } else {
+//                    if (y < motionEvent.getY()) {
+//                        JNIWrapper.round(1, 0, 0);
+//                    } else if (y > motionEvent.getY()) {
+//                        JNIWrapper.round(-1, 0, 0);
+//                    }
+//                }
+                if (lastX < motionEvent.getX() && lastY > motionEvent.getY() ||
+                    lastX > motionEvent.getX() && lastY < motionEvent.getY() ||
+                    lastX < motionEvent.getX() && lastY < motionEvent.getY() ||
+                    lastX > motionEvent.getX() && lastY > motionEvent.getY()) {
+                    JNIWrapper.orbit(false);
+                }
+                break;
+            case MotionEvent.ACTION_UP: // отпускание
+            case MotionEvent.ACTION_CANCEL:
+                break;
+        }
+
+        lastX = motionEvent.getX();
+        lastY = motionEvent.getY();
+
+        return true;
+    }
+
+    private float lastX;
+    private float lastY;
 }

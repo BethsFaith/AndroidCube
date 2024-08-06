@@ -20,14 +20,12 @@ namespace Render::Shaders {
         // Убеждаемся, что объекты ifstream могут выбросить исключение
         vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
         try {
-            // Открываем файлы
             vShaderFile.open(path);
             std::stringstream vShaderStream;
 
             // Считываем содержимое файловых буферов в потоки
             vShaderStream << vShaderFile.rdbuf();
 
-            // Закрываем файлы
             vShaderFile.close();
 
             // Конвертируем данные из потока в строковые переменные
@@ -42,20 +40,18 @@ namespace Render::Shaders {
     }
 
     bool Shader::compileFromString(const char *source) {
-        // Этап №2: Компилируем шейдеры
         int success;
         char infoLog[512];
 
-        // Вершинный шейдер
         glShaderSource(_id, 1, &source, NULL);
         glCompileShader(_id);
 
-        // Если есть ошибки компиляции, то выводим информацию о них
+        // Если есть ошибки компиляции
         glGetShaderiv(_id, GL_COMPILE_STATUS, &success);
         if (!success) {
             glGetShaderInfoLog(_id, 512, NULL, infoLog);
 
-            _error = "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n";
+            _error = "ERROR::SHADER::COMPILATION_FAILED\n";
             _error += infoLog;
         }
 
