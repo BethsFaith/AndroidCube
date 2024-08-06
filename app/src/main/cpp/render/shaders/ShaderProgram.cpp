@@ -5,22 +5,35 @@
 #include "ShaderProgram.h"
 
 namespace Render::Shaders {
-    ShaderProgram::ShaderProgram(const char* vertexSource, const char* fragmentSource) {
-        Shader vertex(GL_VERTEX_SHADER);
-        Shader fragment(GL_FRAGMENT_SHADER);
-
-        vertex.compileFromString(vertexSource);
-        fragment.compileFromString(fragmentSource);
-
+    ShaderProgram::ShaderProgram() {
         // Шейдерная программа
         _id = glCreateProgram();
-        glAttachShader(_id, vertex.getId());
-        glAttachShader(_id, fragment.getId());
-        glLinkProgram(_id);
     }
 
     ShaderProgram::~ShaderProgram() {
         glDeleteProgram(_id);
+    }
+
+    bool ShaderProgram::compileAndLink(const char *vertexSource, const char *fragmentSource) {
+        Shader vertex(GL_VERTEX_SHADER);
+        Shader fragment(GL_FRAGMENT_SHADER);
+
+        auto res = vertex.compileFromString(vertexSource);
+        if (!res) {
+            _error = vertex.getError();
+            return res;
+        }
+        res = fragment.compileFromString(fragmentSource);
+        if (!res) {
+            _error = fragment.getError();
+            return res;
+        }
+
+        glAttachShader(_id, vertex.getId());
+        glAttachShader(_id, fragment.getId());
+        glLinkProgram(_id);
+
+        return res;
     }
 
     void ShaderProgram::use() {
@@ -65,5 +78,9 @@ namespace Render::Shaders {
 
     unsigned int ShaderProgram::getId() const {
         return _id;
+    }
+
+    std::string ShaderProgram::getError() {
+        return _error;
     }
 } // Render

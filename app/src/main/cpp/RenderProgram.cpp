@@ -10,7 +10,7 @@ RenderProgram &RenderProgram::instance() {
     return instance_;
 }
 
-void RenderProgram::setupGraphic(unsigned int width, unsigned int height) {
+void RenderProgram::setupGraphic(GLint width, GLint height) {
     auto cube = std::make_shared<Render::Primitives::PCube>(
             Render::Primitives::Settings{ .withNormals = true,
                                                   .withTextureCoords = false,
@@ -28,13 +28,18 @@ void RenderProgram::setupGraphic(unsigned int width, unsigned int height) {
     _object->addTechnique(Render::Techniques::TRANSFORM, transformTechnique);
     _object->enableTechnique(Render::Techniques::TRANSFORM);
 
-    glViewport(0, 0, (GLint)width, (GLint)height);
+    glViewport(0, 0, width, height);
 }
 
-void RenderProgram::compileShaderProgram(const std::string& vertSource, const std::string& fragShader) {
-    _shaderProgram = std::make_shared<Render::Shaders::ShaderProgram>(
-            vertSource.c_str(),
-            fragShader.c_str());
+bool RenderProgram::compileShaderProgram(const std::string& vertSource, const std::string& fragShader) {
+    _shaderProgram = std::make_shared<Render::Shaders::ShaderProgram>();
+
+    auto res = _shaderProgram->compileAndLink(vertSource.c_str(),
+                                              fragShader.c_str());
+    if (!res) {
+        _lastError = _shaderProgram->getError();
+    }
+    return res;
 }
 
 void RenderProgram::renderFrame() {
@@ -48,4 +53,8 @@ void RenderProgram::renderFrame() {
 void RenderProgram::clearColor() const {
     glClearColor(_clearColor.x, _clearColor.y, _clearColor.z, _clearColor.w);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+std::string RenderProgram::getLastError() {
+    return _lastError;
 }

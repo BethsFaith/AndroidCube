@@ -10,7 +10,7 @@ public class JNIWrapper {
      * A native method that is implemented by the 'Cube' native library,
      * which is packaged with this application.
      */
-    public static native String stringFromJNI();
+    public static native String err();
 
     public static native boolean compileShaders(String vertSource, String fragSource);
 

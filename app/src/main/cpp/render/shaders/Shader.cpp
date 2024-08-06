@@ -13,7 +13,7 @@ namespace Render::Shaders {
         glDeleteShader(_id);
     }
 
-    void Shader::compileFromFile(const std::string& path) {
+    bool Shader::compileFromFile(const std::string& path) {
         std::string vertexCode;
         std::ifstream vShaderFile;
 
@@ -33,13 +33,15 @@ namespace Render::Shaders {
             // Конвертируем данные из потока в строковые переменные
             vertexCode = vShaderStream.str();
         } catch (std::ifstream::failure& e) {
-            throw std::runtime_error("ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ");
+            _error = "ERROR::SHADER::FILE_NOT_SUCCESSFULLY_READ\n";
+
+            return false;
         }
 
-        compileFromString(vertexCode.c_str());
+        return compileFromString(vertexCode.c_str());
     }
 
-    void Shader::compileFromString(const char *source) {
+    bool Shader::compileFromString(const char *source) {
         // Этап №2: Компилируем шейдеры
         int success;
         char infoLog[512];
@@ -53,14 +55,18 @@ namespace Render::Shaders {
         if (!success) {
             glGetShaderInfoLog(_id, 512, NULL, infoLog);
 
-            char errorInfo[] = "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n";
-            strcat(errorInfo, infoLog);
-
-            throw std::runtime_error(errorInfo);
+            _error = "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n";
+            _error += infoLog;
         }
+
+        return success;
     }
 
-    GLuint Shader::getId() {
+    GLuint Shader::getId() const {
         return _id;
+    }
+
+    std::string Shader::getError() {
+        return _error;
     }
 } // Render

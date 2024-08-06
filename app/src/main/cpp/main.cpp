@@ -4,23 +4,22 @@
 #include "RenderProgram.h"
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_Cube_JNIWrapper_stringFromJNI(
+Java_com_Cube_JNIWrapper_err(
         JNIEnv* env,
         jobject /* this */) {
 
-    std::string hello = "Hello from C++";
-    return env->NewStringUTF(hello.c_str());
+    return env->NewStringUTF(RenderProgram::instance().getLastError().c_str());
 }
 
 std::string jstringTostring(JNIEnv *env, jstring jStr) {
     if (!jStr)
         return "";
 
-    const jclass stringClass = env->GetObjectClass(jStr);
-    const jmethodID getBytes = env->GetMethodID(stringClass, "getBytes", "(Ljava/lang/String;)[B");
-    const jbyteArray stringJbytes = (jbyteArray) env->CallObjectMethod(jStr, getBytes, env->NewStringUTF("UTF-8"));
+    const auto stringClass = env->GetObjectClass(jStr);
+    const auto getBytes = env->GetMethodID(stringClass, "getBytes", "(Ljava/lang/String;)[B");
+    const auto stringJbytes = (jbyteArray) env->CallObjectMethod(jStr, getBytes, env->NewStringUTF("UTF-8"));
 
-    size_t length = (size_t) env->GetArrayLength(stringJbytes);
+    auto length = (size_t) env->GetArrayLength(stringJbytes);
     jbyte* pBytes = env->GetByteArrayElements(stringJbytes, NULL);
 
     std::string ret = std::string((char *)pBytes, length);
@@ -40,13 +39,11 @@ Java_com_Cube_JNIWrapper_compileShaders(
         jstring fragSource) {
 
     try {
-        RenderProgram::instance().compileShaderProgram(jstringTostring(env, vertSource),
+        return RenderProgram::instance().compileShaderProgram(jstringTostring(env, vertSource),
                                                        jstringTostring(env, fragSource));
     } catch (std::runtime_error &err) {
         return false;
     }
-
-    return true;
 }
 
 extern "C" JNIEXPORT jboolean JNICALL

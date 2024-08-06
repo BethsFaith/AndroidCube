@@ -19,11 +19,13 @@ public:
 
     static RenderProgram& instance();
 
-    void setupGraphic(unsigned int width, unsigned int height);
+    void setupGraphic(GLint width, GLint height);
 
-    void compileShaderProgram(const std::string& vertSource, const std::string& fragShader);
+    bool compileShaderProgram(const std::string& vertSource, const std::string& fragShader);
 
     void renderFrame();
+
+    std::string getLastError();
 
 protected:
     void clearColor() const;
@@ -35,6 +37,8 @@ private:
 
     Render::Object::Ptr _object;
     Render::Shaders::ShaderProgram::Ptr _shaderProgram;
+
+    std::string _lastError;
 };
 
 #endif //CUBE_RENDERPROGRAM_H

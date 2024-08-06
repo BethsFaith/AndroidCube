@@ -23,10 +23,10 @@ namespace Render::Shaders {
         using Ptr = std::shared_ptr<ShaderProgram>;
 
         // Конструктор считывает данные и выполняет построение шейдера
-        //ShaderProgram(const std::string& vertexPath, const std::string& fragmentPath);
-        ShaderProgram(const char* vertexSource, const char* fragmentSource);
+        ShaderProgram();
         ~ShaderProgram();
 
+        bool compileAndLink(const char* vertexSource, const char* fragmentSource);
         // Использование/активация шейдера
         void use();
 
@@ -42,9 +42,12 @@ namespace Render::Shaders {
         void set4FloatMat(const std::string& name, const GLfloat* value) const;
 
         [[nodiscard]] unsigned int getId() const;
+        std::string getError();
 
     private:
         unsigned int _id; // IdCounter - идентификатор программы
+
+        std::string _error;
     };
 
 } // Render

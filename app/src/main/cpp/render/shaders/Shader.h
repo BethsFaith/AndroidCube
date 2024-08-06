@@ -19,12 +19,15 @@ namespace Render::Shaders {
         explicit Shader(GLenum type);
         ~Shader();
 
-        void compileFromFile(const std::string& path);
-        void compileFromString(const char* source);
+        bool compileFromFile(const std::string& path);
+        bool compileFromString(const char* source);
 
-        GLuint getId();
+        [[nodiscard]] GLuint getId() const;
+        std::string getError();
     private:
         GLuint _id;
+
+        std::string _error;
     };
 
 } // Render
