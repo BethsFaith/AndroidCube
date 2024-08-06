@@ -7,10 +7,29 @@ project("Cube")
 # for GameActivity/NativeActivity derived applications, the same library name must be
 # used in the AndroidManifest.xml file.
 add_library(${CMAKE_PROJECT_NAME} SHARED
-        # List C/C++ source files with relative paths to this CMakeLists.txt.
-        native-lib.cpp)
+        main.cpp
+        render/buffers/ARaiiBuffer.cpp
+        render/buffers/Vao.cpp
+        render/buffers/Vbo.cpp
+        render/buffers/Ebo.cpp
+        render/buffers/Vertex.cpp
+        render/primitives/Primitive.cpp
+        render/primitives/PCube.cpp
+        render/shaders/ShaderProgram.cpp
+        render/shaders/Shader.cpp
+        render/techniques/ATechnique.cpp
+        render/techniques/Transform3dTechnique.cpp
+        render/Object.cpp
+        RenderProgram.cpp
+)
+
+include_directories(render)
+add_subdirectory(glm)
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
         # List libraries link to the target library
         android
-        log)
+        log
+        EGL
+        GLESv3
+        glm)
