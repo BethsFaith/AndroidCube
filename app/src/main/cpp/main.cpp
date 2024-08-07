@@ -67,3 +67,16 @@ Java_com_Cube_JNIWrapper_renderFrame(JNIEnv* env, jobject /* this */) {
 
     RenderProgram::instance().renderFrame();
 }
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_Cube_JNIWrapper_round(JNIEnv* env, jobject /* this */,
+                                  jfloat axX, jfloat axY, jfloat axZ) {
+
+    RenderProgram::instance().rotateCube({axX, axY,axZ});
+}
+
+extern "C" JNIEXPORT void JNICALL
+Java_com_Cube_JNIWrapper_orbit(JNIEnv* env, jobject /* this */, jboolean forward) {
+
+    RenderProgram::instance().orbitCube(forward);
+}

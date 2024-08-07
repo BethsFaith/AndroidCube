@@ -14,13 +14,13 @@ public class RendererWrapper implements Renderer {
 
     @Override
     public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-        if (!JNIWrapper.compileShaders(vertSource, fragSource)) {
-            Log.w("RendererWrapper", String.format("error shaders %s", JNIWrapper.err()));
-        }
     }
 
     @Override
     public void onSurfaceChanged(GL10 gl, int width, int height) {
+        if (!JNIWrapper.compileShaders(vertSource, fragSource)) {
+            Log.w("RendererWrapper", String.format("error shaders %s", JNIWrapper.err()));
+        }
         if (!JNIWrapper.setUpGraphic(width, height)) {
             Log.w("RendererWrapper", String.format("error setUp graphic %s", JNIWrapper.err()));
         }
