@@ -24,7 +24,7 @@ void RenderProgram::setupGraphic(GLint width, GLint height) {
     _transformTechnique = std::make_shared<Render::Techniques::Transform3dTechnique>();
     _transformTechnique->setModel(glm::vec3{0.0f});
     _transformTechnique->setView(glm::vec3(0.0f, 0.0f, -20.0f));
-    _transformTechnique->setProjection(45.0f, width, height, 0.1f, 100.0f);
+    _transformTechnique->setProjection(45.0f, (float)width, (float)height, 0.1f, 100.0f);
 
     _object->addTechnique(Render::Techniques::TRANSFORM, _transformTechnique);
     _object->enableTechnique(Render::Techniques::TRANSFORM);
@@ -62,7 +62,7 @@ std::string RenderProgram::getLastError() {
 
 void RenderProgram::rotateCube(glm::vec3 axis) {
     static auto angle = 0.0f;
-    static const auto speed = 1.0f;
+    static const auto speed = 3.0f;
 
     if (axis.y > 0.0) {
         angle += speed;
