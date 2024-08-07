@@ -137,19 +137,6 @@ public class MainActivity extends Activity implements View.OnTouchListener {
                 } else if (lastX > motionEvent.getX()) {
                     JNIWrapper.round(0, -1, 0);
                 }
-//                if (Math.abs(x - motionEvent.getX()) > Math.abs(y - motionEvent.getY())) {
-//                    if (x < motionEvent.getX()) {
-//                        JNIWrapper.round(0, 1, 0);
-//                    } else if (x > motionEvent.getX()) {
-//                        JNIWrapper.round(0, -1, 0);
-//                    }
-//                } else {
-//                    if (y < motionEvent.getY()) {
-//                        JNIWrapper.round(1, 0, 0);
-//                    } else if (y > motionEvent.getY()) {
-//                        JNIWrapper.round(-1, 0, 0);
-//                    }
-//                }
                 if (lastX < motionEvent.getX() && lastY > motionEvent.getY() ||
                     lastX > motionEvent.getX() && lastY < motionEvent.getY() ||
                     lastX < motionEvent.getX() && lastY < motionEvent.getY() ||

@@ -26,9 +26,6 @@ void RenderProgram::setupGraphic(GLint width, GLint height) {
 
     transformTechnique = std::make_shared<Render::Techniques::Transform3dTechnique>();
     transformTechnique->setModel(glm::vec3{0.0f});
-//    transformTechnique->setModel(glm::vec3{0.0f}, Render::Techniques::Transform3dTechnique::Rotate{
-//                                                    .angle = 0.0f,
-//                                                    .axis = glm::vec3(0.0f, 1.0f, 0.0f)});
     transformTechnique->setView(glm::vec3(0.0f, 0.0f, -20.0f));
     transformTechnique->setProjection(45.0f, width, height, 0.1f, 100.0f);
 
