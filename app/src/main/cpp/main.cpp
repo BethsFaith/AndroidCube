@@ -20,7 +20,7 @@ std::string jstringTostring(JNIEnv *env, jstring jStr) {
     const auto stringJbytes = (jbyteArray) env->CallObjectMethod(jStr, getBytes, env->NewStringUTF("UTF-8"));
 
     auto length = (size_t) env->GetArrayLength(stringJbytes);
-    jbyte* pBytes = env->GetByteArrayElements(stringJbytes, NULL);
+    jbyte* pBytes = env->GetByteArrayElements(stringJbytes, nullptr);
 
     std::string ret = std::string((char *)pBytes, length);
     env->ReleaseByteArrayElements(stringJbytes, pBytes, JNI_ABORT);
