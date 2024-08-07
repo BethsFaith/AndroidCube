@@ -18,7 +18,7 @@ public class JNIWrapper {
 
     public static native void renderFrame();
 
-    public static native void round(float axX, float axY, float axZ);
+    public static native void rotate(float axX, float axY, float axZ);
 
     public static native void orbit(boolean forward);
 }

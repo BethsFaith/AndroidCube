@@ -4,13 +4,10 @@
 
 #include "RenderProgram.h"
 
-RenderProgram::RenderProgram() {
-}
-
 RenderProgram &RenderProgram::instance() {
-    static RenderProgram instance_;
+    static RenderProgram _instance;
 
-    return instance_;
+    return _instance;
 }
 
 void RenderProgram::setupGraphic(GLint width, GLint height) {
@@ -24,12 +21,12 @@ void RenderProgram::setupGraphic(GLint width, GLint height) {
     _object = std::make_shared<Render::Object>();
     _object->setPrimitive(cube);
 
-    transformTechnique = std::make_shared<Render::Techniques::Transform3dTechnique>();
-    transformTechnique->setModel(glm::vec3{0.0f});
-    transformTechnique->setView(glm::vec3(0.0f, 0.0f, -20.0f));
-    transformTechnique->setProjection(45.0f, width, height, 0.1f, 100.0f);
+    _transformTechnique = std::make_shared<Render::Techniques::Transform3dTechnique>();
+    _transformTechnique->setModel(glm::vec3{0.0f});
+    _transformTechnique->setView(glm::vec3(0.0f, 0.0f, -20.0f));
+    _transformTechnique->setProjection(45.0f, width, height, 0.1f, 100.0f);
 
-    _object->addTechnique(Render::Techniques::TRANSFORM, transformTechnique);
+    _object->addTechnique(Render::Techniques::TRANSFORM, _transformTechnique);
     _object->enableTechnique(Render::Techniques::TRANSFORM);
 
     glViewport(0, 0, width, height);
@@ -64,9 +61,8 @@ std::string RenderProgram::getLastError() {
 }
 
 void RenderProgram::rotateCube(glm::vec3 axis) {
-    static auto pos = glm::vec3{0.0f, 0.0f, 0.0f};
     static auto angle = 0.0f;
-    static float const speed = 1.0f;
+    static const auto speed = 1.0f;
 
     if (axis.y > 0.0) {
         angle += speed;
@@ -74,17 +70,18 @@ void RenderProgram::rotateCube(glm::vec3 axis) {
         angle -= speed;
         axis.y = 1.0f;
     }
-    transformTechnique->setRotate(Render::Techniques::Transform3dTechnique::Rotate{
+    _transformTechnique->setRotate(Render::Techniques::Transform3dTechnique::Rotate{
             .angle = angle,
             .axis = axis});
-    transformTechnique->calculateModel();
+    _transformTechnique->calculateModel();
 }
 
 void RenderProgram::orbitCube(bool forward) {
-    static auto start = glm::vec3{0.0f, 0.0f, 0.0f};
+    static auto start = glm::vec3{0.f};
     static auto angle = 0.0f;
-    static const auto r = 5.0f;
+    static const auto r = 2.0f;
     static float const speed = 0.15f;
+
     if (_object != nullptr && _shaderProgram != nullptr) {
         if (forward) {
             angle += speed;
@@ -96,7 +93,7 @@ void RenderProgram::orbitCube(bool forward) {
         pos.x = r * std::cos(angle + start.x);
         pos.y = r * std::sin(angle + start.y);
 
-        transformTechnique->setTransform(pos);
-        transformTechnique->calculateModel();
+        _transformTechnique->setTransform(pos);
+        _transformTechnique->calculateModel();
     }
 }

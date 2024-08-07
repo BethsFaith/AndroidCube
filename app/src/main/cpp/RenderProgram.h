@@ -20,7 +20,6 @@ public:
     static RenderProgram& instance();
 
     void setupGraphic(GLint width, GLint height);
-
     bool compileShaderProgram(const std::string& vertSource, const std::string& fragShader);
 
     void renderFrame();
@@ -34,13 +33,13 @@ protected:
     void clearColor() const;
 
 private:
-    RenderProgram();
+    RenderProgram() = default;
 
-    glm::vec4 _clearColor{1.0,1.0,1.0,1.0};
+    glm::vec4 _clearColor{1.0f};
 
     Render::Object::Ptr _object;
     Render::Shaders::ShaderProgram::Ptr _shaderProgram;
-    Render::Techniques::Transform3dTechnique::Ptr transformTechnique;
+    Render::Techniques::Transform3dTechnique::Ptr _transformTechnique;
 
     std::string _lastError;
 };
