@@ -62,7 +62,7 @@ std::string RenderProgram::getLastError() {
 
 void RenderProgram::rotateCube(glm::vec3 axis) {
     static auto angle = 0.0f;
-    static const auto speed = 1.0f;
+    static const auto speed = 3.0f;
 
     if (axis.y > 0.0) {
         angle += speed;
